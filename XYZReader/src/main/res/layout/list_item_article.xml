@@ -14,7 +14,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!--suppress AndroidLintContentDescription -->
+        <com.example.xyzreader.ui.DynamicHeightNetworkImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/photo_placeholder"
+            android:contentDescription="@string/article_image"
+            android:scaleType="centerCrop" />
+
         <TextView
             android:id="@+id/article_title"
             style="@style/TextAppearance.AppCompat.Subhead"
@@ -40,12 +47,7 @@
             android:paddingBottom="16dp"
             android:textColor="@color/secondary_text" />
 
-        <com.example.xyzreader.ui.DynamicHeightNetworkImageView
-            android:id="@+id/thumbnail"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            android:background="@color/photo_placeholder" />
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
