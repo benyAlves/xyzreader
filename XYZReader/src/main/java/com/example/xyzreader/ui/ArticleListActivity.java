@@ -82,6 +82,8 @@ public class ArticleListActivity extends AppCompatActivity implements
         }
 
         mSwipeRefreshLayout.setOnRefreshListener(this::refresh);
+
+
     }
 
     private void refresh() {

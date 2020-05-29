@@ -1,5 +1,6 @@
 package com.example.xyzreader.ui;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Loader;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.palette.graphics.Palette;
 
 import com.android.volley.VolleyError;
@@ -61,6 +63,8 @@ public class ArticleDetailFragment extends Fragment implements
     // Most time functions can only handle 1902 - 2037
     private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2, 1, 1);
 
+    private ScrollListener scrollListener;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -76,16 +80,6 @@ public class ArticleDetailFragment extends Fragment implements
         return fragment;
     }
 
-
-    static float constrain(float val, float min, float max) {
-        if (val < min) {
-            return min;
-        } else if (val > max) {
-            return max;
-        } else {
-            return val;
-        }
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -122,6 +116,15 @@ public class ArticleDetailFragment extends Fragment implements
         mPhotoView = mRootView.findViewById(R.id.photo);
 
         mStatusBarColorDrawable = new ColorDrawable(0);
+
+        NestedScrollView nestedScrollView = mRootView.findViewById(R.id.nestedScrollView);
+        nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (scrollY > oldScrollY) {
+                scrollListener.hideFab();//fab.hide();
+            } else {
+                scrollListener.showFab();//fab.show();
+            }
+        });
 
         bindViews();
         return mRootView;
@@ -244,5 +247,25 @@ public class ArticleDetailFragment extends Fragment implements
         return mIsCard
                 ? (int) mPhotoContainerView.getTranslationY() + mPhotoView.getHeight() - mScrollY
                 : mPhotoView.getHeight() - mScrollY;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            scrollListener = (ScrollListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnListItemSelectedListener");
+        }
+    }
+
+    public interface ScrollListener {
+        void hideFab();
+
+        void showFab();
     }
 }
