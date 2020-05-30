@@ -8,6 +8,7 @@
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="4dp"
         android:background="?colorPrimary"
         android:theme="@style/Theme.Bacon.AppBarOverlay">
 
@@ -34,6 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        app:elevation="4dp"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/ic_share_white_24dp" />
 
